@@ -3,4 +3,5 @@
     <color name="colorPrimary">#00A5FE</color>
     <color name="colorPrimaryDark">#00A5FE</color>
     <color name="colorAccent">#00A5FE</color>
+    <color name="bd_transparant">#0700A5FE</color>
 </resources>
