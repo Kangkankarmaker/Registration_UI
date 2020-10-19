@@ -5,12 +5,15 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.kangkan.restapi.Network.APIUtils;
 import com.kangkan.restapi.Network.User_Service;
 import com.kangkan.restapi.model.User_Response;
@@ -75,15 +79,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*final TextInputLayout layout=findViewById(R.id.textInputLayout5);
+        editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean isFocused) {
+                if(!isFocused){
+                    layout.setPasswordVisibilityToggleEnabled(false);
+                }else{
+                    layout.setPasswordVisibilityToggleEnabled(true);
+                }
+            }
+        });*/
+
     }
 
     private void registerUser() {
         final String name = editTextName.getText().toString().trim();
         final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        String confirm_password = editTextConfirmPassword.getText().toString().trim();
         final String phone = editTextPhone.getText().toString().trim();
-
 
         if (validateInputs()){
             btn_reg.setVisibility(View.GONE);
@@ -133,51 +147,59 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean validateInputs() {
-        if (editTextName.length() == 0) {
+
+        final String name = editTextName.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        String confirm_password = editTextConfirmPassword.getText().toString().trim();
+        final String phone = editTextPhone.getText().toString().trim();
+
+        if (name.isEmpty()) {
             editTextName.setError("UserName Can't be Empty");
             editTextName.requestFocus();
             return false;
         }
 
-        if (editTextEmail.length() == 0) {
+        if (email.isEmpty()) {
             editTextEmail.setError("Email Can't be Empty");
             editTextEmail.requestFocus();
             return false;
         }
-       /* if (!Patterns.EMAIL_ADDRESS.matcher(editTextEmail).matches()) {
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Invalid Email Address");
             editTextEmail.requestFocus();
             return false;
-        }*/
+        }
 
-        if (editTextPhone.length()==0) {
+        if (phone.isEmpty()) {
             editTextPhone.setError("Phone Can't be Empty");
             editTextPhone.requestFocus();
             return false;
         }
 
-        if (editTextPhone.length()!=11) {
+        if (phone.length() != 11) {
             editTextPhone.setError("Phone number must be 11 digit");
             editTextPhone.requestFocus();
             return false;
         }
 
-        if (editTextPassword.length()==0) {
+        if (password.isEmpty()) {
             editTextPassword.setError("Password Can't be Empty");
             editTextPassword.requestFocus();
             return false;
         }
-        if (editTextPassword.length() < 6) {
+        if (password.length() < 6) {
             editTextPassword.setError("Password length must be 6 digit");
             editTextPassword.requestFocus();
             return false;
         }
-        if (editTextConfirmPassword.length()==0) {
+        if (confirm_password.isEmpty()) {
             editTextConfirmPassword.setError("Confirm Password Can't be Empty");
             editTextConfirmPassword.requestFocus();
             return false;
         }
-        if (!editTextConfirmPassword.equals(editTextConfirmPassword)) {
+        if (!confirm_password.equals(password)) {
             editTextConfirmPassword.setError("Confirm Password and password does not match");
             editTextConfirmPassword.requestFocus();
             return false;

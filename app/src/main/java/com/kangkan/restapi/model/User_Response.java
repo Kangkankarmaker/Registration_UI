@@ -17,8 +17,7 @@ public class User_Response {
     @SerializedName("User_pass")
     @Expose
     private String user_pass;
-
-
+    
     public String getUser_name() {
         return user_name;
     }
